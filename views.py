@@ -11,6 +11,12 @@ class About:
         return '200 OK', 'О нас'
 
 
+class Contacts:
+    def __call__(self, request):
+        return '200 OK', render('contacts.html',
+                                data=request.get('data', None))
+
+
 class NotFound404:
     def __call__(self, request):
         return '404 WHAT', '404 PAGE Not Found'
