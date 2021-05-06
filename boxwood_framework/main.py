@@ -1,5 +1,5 @@
 import quopri
-from requests import GetRequests, PostRequests
+from boxwood_framework.requests import GetRequests, PostRequests
 
 
 class PageNotFound404:
@@ -45,7 +45,6 @@ class Framework:
             view = self.routes_lst[path]
         else:
             view = PageNotFound404()
-        request = {}
         # наполняем словарь request элементами
         # этот словарь получат все контроллеры
         # отработка паттерна front controller

@@ -1,6 +1,7 @@
+from wsgiref.simple_server import make_server
+
 from boxwood_framework.main import Framework
 from urls import routes, fronts
-from wsgiref.simple_server import make_server
 
 application = Framework(routes, fronts)
 
