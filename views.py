@@ -2,39 +2,51 @@ from datetime import date
 
 from boxwood_framework.templator import render
 from patterns.creational_patterns import Engine, Logger
+from patterns.structural_patterns import App, Debug
 
 site = Engine()
 logger = Logger('main')
 
+routes = {}
 
+
+@App(routes=routes, url='/')
 class Index:
+    @Debug(name='Index')
     def __call__(self, request):
         return '200 OK', render('index.html', objects_list=site.categories)
 
 
+@App(routes=routes, url='/about/')
 class About:
     def __call__(self, request):
         return '200 OK', render('about.html')
 
 
+@App(routes=routes, url='/contacts/')
 class Contacts:
     def __call__(self, request):
         return '200 OK', render('contacts.html')
 
 
 class NotFound404:
+    @Debug(name='NotFound404')
     def __call__(self, request):
         return '404 WHAT', '404 PAGE Not Found'
 
 
 # контроллер - Расписания
+@App(routes=routes, url='/study_programs/')
 class StudyPrograms:
+    @Debug(name='StudyPrograms')
     def __call__(self, request):
         return '200 OK', render('study_programs.html', data=date.today())
 
 
 # контроллер - список курсов
+@App(routes=routes, url='/courses-list/')
 class CoursesList:
+    @Debug(name='CoursesList')
     def __call__(self, request):
         logger.log('Список курсов')
         try:
@@ -48,9 +60,11 @@ class CoursesList:
 
 
 # контроллер - создать курс
+@App(routes=routes, url='/create-course/')
 class CreateCourse:
     category_id = -1
 
+    @Debug(name='CreateCourse')
     def __call__(self, request):
         if request['method'] == 'POST':
             # метод пост
@@ -82,9 +96,10 @@ class CreateCourse:
 
 
 # контроллер - создать категорию
+@App(routes=routes, url='/create-category/')
 class CreateCategory:
+    @Debug(name='CreateCategory')
     def __call__(self, request):
-
         if request['method'] == 'POST':
             # метод пост
             print(request)
@@ -111,7 +126,9 @@ class CreateCategory:
 
 
 # контроллер - список категорий
+@App(routes=routes, url='/category-list/')
 class CategoryList:
+    @Debug(name='CategoryList')
     def __call__(self, request):
         logger.log('Список категорий')
         return '200 OK', render(
@@ -119,7 +136,9 @@ class CategoryList:
 
 
 # контроллер - копировать курс
+@App(routes=routes, url='/copy-course/')
 class CopyCourse:
+    @Debug(name='CopyCourse')
     def __call__(self, request):
         request_params = request['request_params']
 
